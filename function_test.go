@@ -543,6 +543,10 @@ var floatPercentageData = []struct {
 	{19.93, .045, 2, Round, .01},
 	{19.93, .045, 4, Round, .009},
 	{19.93, .045, 5, Round, .00897},
+	{0.25, 40, 1, Round, .1},
+	{0.25, 4, 2, Round, .01},
+	{0.25, 4, 4, Round, .01},
+	{-0.09, 1, 2, Round, 0},
 
 	{64.72, 10, 3, Floor, 6.472},
 	{64.72, 10, 2, Floor, 6.47},
@@ -703,5 +707,11 @@ func TestRoundingError(t *testing.T) {
 		if resultMantLen > v.maxMantissaLen {
 			t.Errorf("Expected mantissa length to be less than %v, got %v", v.maxMantissaLen, resultMantLen)
 		}
+	}
+}
+
+func BenchmarkPercentageFromFloat(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		PercentageFromFloat(1.534935, 50.393, 2, Round)
 	}
 }
